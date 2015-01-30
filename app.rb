@@ -8,9 +8,9 @@ get '/' do
   source_text = File.read(text_file).strip
   text_array = source_text.split
 
-  exclude = []
-  for i in ((text_array.length-5)...(text_array.length))
-    exclude << text_array[i]
+  # array with the last 5 words
+  exclude = ((text_array.length-5)...(text_array.length)).map do |i|
+    text_array[i]
   end
 
   erb :"get.json", locals: { source_text: source_text, exclude: exclude }
