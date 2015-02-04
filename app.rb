@@ -5,6 +5,8 @@ require "json"
 require "./models/text"
 require "./models/parser"
 
+set :port, 8000
+
 
 # Parse texts when app starts
 Dir["texts/*"].each do |text_path|
