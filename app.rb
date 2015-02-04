@@ -1,7 +1,6 @@
 require "sinatra"
 require "sinatra/reloader" if development?
 require "json"
-require 'pry'
 
 require "./models/text"
 require "./models/parser"
