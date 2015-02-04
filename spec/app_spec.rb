@@ -28,5 +28,27 @@ describe 'The Word Counting App' do
       post '/', params_bad_count
       expect(last_response.status).to eq(400)
     end
+
+    it "responds with 400 if freq_count_excluded is missing" do
+      post '/', params_missing
+      expect(last_response.status).to eq(400)
+    end
+
+    it "responds with 400 if params are empty" do
+      post '/', {}
+      expect(last_response.status).to eq(400)
+    end
+  end
+
+  describe "#param_to_hash" do
+    it "converts keys to integers" do
+      hash = param_to_hash({"hello" => "1"})
+      expect(hash).to eq({"hello" => 1})
+    end
+
+    it "returns an empty hash if param is nil" do
+      hash = param_to_hash(nil)
+      expect(hash).to eq({})
+    end
   end
 end

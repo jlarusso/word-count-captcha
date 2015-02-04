@@ -38,35 +38,43 @@ end
 post '/' do
   content_type :json
 
-  # TODO: validate params
-  # source_text = params[:text]
-  # excluded = params[:excluded]
-  # freq_count = params[:freq_count]
+  if valid_params?(params)
+    p = Parser.new(params[:text])
 
-  p = Parser.new(params[:text])
-
-  # If tokens match
-  if p.sha == params[:text_token]
-    # If answers match
-    if p.freq_count_excluded == integerize_param(params[:freq_count_excluded])
-      status 200
-      body 'Ok'
+    # If tokens match
+    if p.sha == params[:text_token]
+      # If answers match
+      if p.freq_count_excluded == param_to_hash(params[:freq_count_excluded])
+        status 200
+        body 'Ok'
+      else
+        status 400
+        body 'Bad request'
+      end
     else
       status 400
-      body 'Bad request'
+      body 'Bad token'
     end
   else
     status 400
-    body 'Bad token'
+    body 'Bad request'
   end
 end
 
-def integerize_param(hash)
-  new_hash = {}
+def valid_params?(params)
+  params.has_key?('freq_count_excluded') &&
+    params.has_key?('text_token') &&
+    params.has_key?('text') &&
+    !params['text'].empty?
+end
 
-  hash.keys.each do |key|
-    new_hash[key] = hash[key].to_i
+def param_to_hash(hash)
+  if hash
+    hash.inject(hash) do |h, (k, str)|
+      h[k] = str.to_i
+      h
+    end
+  else
+    {}
   end
-
-  new_hash
 end

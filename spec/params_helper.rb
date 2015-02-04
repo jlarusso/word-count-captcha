@@ -28,6 +28,14 @@ module ParamsMixin
       text_token: p.sha
     }
   end
+
+  def params_missing
+    {
+      text: "foo crepes",
+      excluded: ["crepes"],
+      text_token: "d045c849fca0c98d6208518514d2743a32361ad6"
+    }
+  end
 end
 
 RSpec.configure { |c| c.include ParamsMixin }
