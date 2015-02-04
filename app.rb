@@ -62,8 +62,7 @@ post '/' do
 end
 
 def valid_params?(params)
-  params.has_key?('freq_count_excluded') &&
-    params.has_key?('text_token') &&
+  params.has_key?('text_token') &&
     params.has_key?('text') &&
     !params['text'].empty?
 end
