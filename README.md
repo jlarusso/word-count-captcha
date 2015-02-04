@@ -15,8 +15,10 @@
 - I used index position to choose excluded words.  Originally, I had thought about using rules such as number of vowels or word length, but in the end I chose a strategy that was better at avoiding edge cases (such as if all the words have a ton of vowels, or if the text has a lot of really short words).
 - I included both functional tests using different param cases and unit tests for model methods.
 - I included a cheat protection mechanism using a SHA digest of a secret token combined with the original body text.  This prevents the use of unauthorized or edited texts and imparts statelessness to the app.
+- I removed the erb json templates because I found they were redundant for now.  I was passing the erb an object that was formed exactly like one in the template.  I am using `Hash#to_json` instead.
 
 ## Next:
 - Refactor app to use a modular Sinatra style organization to avoid having public class methods exported to the top level.
 - Potentially revisit the way excluded words are chosen in order to be less predictable.
 - Clean up `POST '/'` action (The flow could have more clarity).
+- Possibly implement jbuilder for templating.
