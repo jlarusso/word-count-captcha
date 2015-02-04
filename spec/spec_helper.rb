@@ -3,7 +3,6 @@ ENV['RACK_ENV'] = 'test'
 require File.expand_path '../../app', __FILE__
 require 'rack/test'
 require "json"
-require "./spec/params_helper"
 require "pry"
 
 module RSpecMixin

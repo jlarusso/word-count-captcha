@@ -17,7 +17,7 @@ class Parser
 
   # Return an array of downcased words containing only letters
   def split_text(text)
-    text.split.map { |word| word.gsub(/\W+/, '').downcase }
+    text.split.map { |word| word.gsub(/[^a-zA-Z]/, '').downcase }
   end
 
   # Return empty array if @word_ary only contains only one unique word.
