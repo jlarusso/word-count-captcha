@@ -4,7 +4,7 @@ describe Parser do
   describe "#split_text" do
     it "returns an array of downcased words containing only letters" do
       p = Parser.new('arbitrary text')
-      split_text = p.split_text('Hi, 8how ARE! you**  doing?')
+      split_text = p.split_text('Hi, - 8how ARE! you**  doing?')
       expect(split_text).to eq(%w{ hi how are you doing })
     end
   end

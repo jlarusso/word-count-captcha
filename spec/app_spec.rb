@@ -14,8 +14,22 @@ describe 'The Word Counting App' do
   end
 
   describe "POST '/'" do
+
+    # NOTE: this spec evaluates the texts within 'texts/'
+    it "responds with 200 for texts in texts/" do
+      Text.all.each do |text|
+        post '/', params_custom(text)
+        expect(last_response).to be_ok
+      end
+    end
+
     it "responds with 200 if frequency count is correct" do
       post '/', params_correct
+      expect(last_response).to be_ok
+    end
+
+    it "responds with 200 if frequency count is correct, though empty" do
+      post '/', params_correct_empty
       expect(last_response).to be_ok
     end
 

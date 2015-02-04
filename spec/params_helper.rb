@@ -1,6 +1,26 @@
 module ParamsMixin
+  def params_custom(text)
+    p  = Parser.new(text)
+    {
+      text: p.text,
+      excluded: p.excluded,
+      freq_count_excluded: p.freq_count_excluded,
+      text_token: p.sha
+    }
+  end
+
   def params_correct
     p  = Parser.new("The quick brown fox jumped over the lazy dog.")
+    {
+      text: p.text,
+      excluded: p.excluded,
+      freq_count_excluded: p.freq_count_excluded,
+      text_token: p.sha
+    }
+  end
+
+  def params_correct_empty
+    p  = Parser.new("pie pie pie pie pie pie pie")
     {
       text: p.text,
       excluded: p.excluded,
