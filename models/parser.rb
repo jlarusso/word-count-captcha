@@ -15,14 +15,10 @@ class Parser
     Digest::SHA1.hexdigest(text + CHEAT_PREVENTION_KEY)
   end
 
-  # Return an array of downcased words containing only letters
   def split_text(text)
     text.split.map { |word| word.gsub(/[^a-zA-Z]/, '').downcase }
   end
 
-  # Return empty array if @word_ary only contains only one unique word.
-  # Otherwise, return an array of excluded words roughly 10% of the total
-  # non-random and evenly spaced throughout the document.
   def excluded
     word_count = @word_ary.length
     if word_count == 1
@@ -36,7 +32,6 @@ class Parser
     end
   end
 
-  # Return a hash count of word frequency in @word_ary
   def freq_count
     @word_ary.inject({}) do |hash, word|
       if hash[word]
@@ -49,9 +44,13 @@ class Parser
     end
   end
 
-  # Return a hash count of word frequency ommitting words on the excludes list
+  # NOTE: this method is to provide an easy to use interface while still
+  # enabling modular testing.
   def freq_count_excluded
-    exclude_list = excluded
+    exclude_with(excluded)
+  end
+
+  def exclude_with(exclude_list)
     freq_count.reject { |k, v| exclude_list.include? k }
   end
 end

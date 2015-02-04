@@ -34,7 +34,7 @@ describe Parser do
   end
 
   describe "#freq_count" do
-    it "returns a hash count of all words in @word_ary" do
+    it "returns a hash count of word frequency in @word_ary" do
       text = "At three in the afternoon the following day they reached the"\
         " airfield at Des Moines.  Having landed the plane, the pilot"\
         " sauntered off for parts unknown, carrying his flask of gold flakes"\
@@ -47,6 +47,18 @@ describe Parser do
       p.excluded.each do |word|
         expect(freq_count_excluded_hash[word]).to be_nil
       end
+    end
+  end
+
+  describe "#exclude_with" do
+    it "returns a hash count of word frequency ommitting words on the excludes list" do
+      p = Parser.new('Hello, how are you doing?')
+      expect(p.exclude_with(['are'])).to eq({
+        'hello' => 1,
+        'how' => 1,
+        'you' => 1,
+        'doing' => 1
+      })
     end
   end
 end
