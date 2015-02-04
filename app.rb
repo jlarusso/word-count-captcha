@@ -46,19 +46,15 @@ post '/' do
     if p.sha == params[:text_token]
       # If answers match
       if p.freq_count_excluded == param_to_hash(params[:freq_count_excluded])
-        status 200
-        body 'Ok'
+        successful_request
       else
-        status 400
-        body 'Bad request'
+        bad_request
       end
     else
-      status 400
-      body 'Bad token'
+      bad_token
     end
   else
-    status 400
-    body 'Bad request'
+    bad_request
   end
 end
 
@@ -66,6 +62,21 @@ def valid_params?(params)
   params.has_key?('text_token') &&
     params.has_key?('text') &&
     !params['text'].empty?
+end
+
+def bad_request
+  status 400
+  body 'Bad request'
+end
+
+def bad_token
+  status 400
+  body 'Bad token'
+end
+
+def successful_request
+  status 200
+  body 'Ok'
 end
 
 def param_to_hash(hash)
