@@ -1,6 +1,4 @@
 require "./spec/spec_helper"
-require "json"
-require "pry"
 
 describe 'The Word Counting App' do
   describe "GET '/'" do
