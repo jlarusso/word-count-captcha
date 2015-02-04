@@ -16,7 +16,7 @@ class Parser
   end
 
   def split_text(text)
-    text.split.map { |word| word.gsub(/[^a-zA-Z]/, '').downcase }
+    text.gsub(/[^a-zA-Z\s]/, '').downcase.split
   end
 
   def excluded
