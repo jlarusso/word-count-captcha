@@ -1,5 +1,7 @@
 require "sinatra"
 require "sinatra/reloader" if development?
+require "json"
+require 'pry'
 
 require "./models/text"
 require "./models/parser"
@@ -15,13 +17,15 @@ end
 # Send a random body of text to the client with a list of some (but not all)
 # words in that text
 get '/' do
+  content_type :json
+
   source_text = Text.all.sample
   if source_text
     p = Parser.new(source_text)
 
-    erb :"body.json", locals: { source_text: source_text, exclude: p.excludes }
+    { text: source_text, excluded: p.excluded, text_token: p.sha }.to_json
   else
-    erb :"error_no_text.json"
+    { error: "No texts found." }.to_json
   end
 end
 
@@ -32,6 +36,37 @@ end
 # list.
 # Send response back to the client.
 post '/' do
-  puts "Here are the params: #{params}"
-  erb :"answer.json"
+  content_type :json
+
+  # TODO: validate params
+  # source_text = params[:text]
+  # excluded = params[:excluded]
+  # freq_count = params[:freq_count]
+
+  p = Parser.new(params[:text])
+
+  # If tokens match
+  if p.sha == params[:text_token]
+    # If answers match
+    if p.freq_count_excluded == integerize_param(params[:freq_count_excluded])
+      status 200
+      body 'Ok'
+    else
+      status 400
+      body 'Bad request'
+    end
+  else
+    status 400
+    body 'Bad token'
+  end
+end
+
+def integerize_param(hash)
+  new_hash = {}
+
+  hash.keys.each do |key|
+    new_hash[key] = hash[key].to_i
+  end
+
+  new_hash
 end

@@ -5,5 +5,6 @@ gem "sinatra"
 gem "sinatra-contrib"
 
 gem "json"
+gem "pry"
 
 gem "rspec"
