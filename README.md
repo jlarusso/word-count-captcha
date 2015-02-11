@@ -1,4 +1,5 @@
 # Word Count Captcha
+Detect humans from space trolls, who are bad at counting words.
 
 ## Setup:
 - Pull down the repository
